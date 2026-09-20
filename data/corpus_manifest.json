@@ -1,0 +1,22 @@
+{
+  "seq_len": 1024,
+  "model": "ibm-granite/granite-3.1-1b-a400m-instruct",
+  "shapes": {
+    "code": [
+      195,
+      1024
+    ],
+    "prose": [
+      195,
+      1024
+    ],
+    "math": [
+      195,
+      1024
+    ],
+    "chat": [
+      195,
+      1024
+    ]
+  }
+}

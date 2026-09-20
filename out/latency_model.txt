@@ -1,0 +1,30 @@
+All-to-all payload and implied latency  (DERIVED, NOT MEASURED)
+====================================================================
+model        : Granite-3.1-1B-A400M, d=1024, k=8, 24 MoE layers, fp16
+micro-batch  : B = 4096 tokens,  N = 8 devices, contiguous placement
+ASSUMPTION   : per-device receive bandwidth 50 GB/s (~400 Gb/s NIC).
+               This is an assumption, not a measurement. No cluster was used.
+
+dispatch per token per layer :    16384 B  (k*d*b)
+combine  per token per layer :    16384 B
+per token per MoE layer      :     32.0 KiB
+per token per forward pass   :    768.0 KiB  (x24 layers)
+per forward step, B=4096     :     3.00 GiB across 48 collectives
+inter-device share (1 - 1/N) :     87.5 %
+
+per-device receive per layer :     8.39 MB
+                             :      168 us at the assumed bandwidth
+balanced all-to-all per pass :     8.05 ms  (x24 layers x2)
+
+MEASURED straggler factors at this B and N
+(mean over 24 layers and the 4 WITHIN-domain traces, ~200k tokens each):
+  S_obs  (what a server sees)      = 1.5422  ->   12.42 ms  (+4.37 ms skew tax)
+  S_obs  95th pct micro-batch      = 1.6094  ->   12.96 ms  (+4.91 ms)
+  S_shuf (correlation destroyed)   = 1.5345  ->   12.36 ms  (+4.30 ms)
+  S_iid  (closed form)             = 1.5537  ->   12.51 ms  (+4.46 ms)
+
+  attributable to expert popularity + placement : 4.30 ms  (S_shuf - 1)
+  attributable to token-to-token correlation    : 0.06 ms  (S_obs - S_shuf)
+
+Scale contrast - why this is a cluster problem and not a laptop problem:
+  DeepSeek-V3-shaped: d=7168 -> 224 KiB per token per MoE layer, 7.0x this model's traffic

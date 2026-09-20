@@ -1,0 +1,27 @@
+~/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+loaded on mps | L=24 E=32 K=8 d=1024
+code     40/ 195 seq       86 tok/s  eta  30.9 min
+code     80/ 195 seq       95 tok/s  eta  20.6 min
+code    120/ 195 seq      115 tok/s  eta  11.1 min
+code    160/ 195 seq      141 tok/s  eta   4.2 min
+code    195/ 195 seq      160 tok/s  eta   0.0 min
+code   done  (199680, 24, 8)  -> trace_code.npz (21.7 MB)
+prose    40/ 195 seq      437 tok/s  eta   6.1 min
+prose    80/ 195 seq      432 tok/s  eta   4.5 min
+prose   120/ 195 seq      427 tok/s  eta   3.0 min
+prose   160/ 195 seq      420 tok/s  eta   1.4 min
+prose   195/ 195 seq      415 tok/s  eta   0.0 min
+prose  done  (199680, 24, 8)  -> trace_prose.npz (23.5 MB)
+math     40/ 195 seq      374 tok/s  eta   7.1 min
+math     80/ 195 seq      342 tok/s  eta   5.7 min
+math    120/ 195 seq      343 tok/s  eta   3.7 min
+math    160/ 195 seq      348 tok/s  eta   1.7 min
+math    195/ 195 seq      350 tok/s  eta   0.0 min
+math   done  (199680, 24, 8)  -> trace_math.npz (22.1 MB)
+chat     40/ 195 seq      364 tok/s  eta   7.3 min
+chat     80/ 195 seq      336 tok/s  eta   5.8 min
+chat    120/ 195 seq      328 tok/s  eta   3.9 min
+chat    160/ 195 seq      321 tok/s  eta   1.9 min
+chat    195/ 195 seq      321 tok/s  eta   0.0 min
+chat   done  (199680, 24, 8)  -> trace_chat.npz (23.3 MB)

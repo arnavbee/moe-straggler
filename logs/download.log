@@ -1,0 +1,4 @@
+~/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+Fetching 9 files:   0%|          | 0/9 [00:00<?, ?it/s]Fetching 9 files:  56%|█████▌    | 5/9 [10:05<08:04, 121.05s/it]Fetching 9 files: 100%|██████████| 9/9 [10:05<00:00, 67.25s/it] 
+CACHED_AT ~/.cache/huggingface/hub/models--ibm-granite--granite-3.1-1b-a400m-instruct/snapshots/0da7a48b0276d500ce5922fd2b33944091fc6c09

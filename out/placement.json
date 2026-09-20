@@ -1,0 +1,32 @@
+{
+  "random half -> other half (mixed traffic)": {
+    "S_contig": 1.4902760041065706,
+    "S_oracle": 1.0586694961939103,
+    "S_heldout": 1.0573637611845619,
+    "recovered": 0.8829970043320888
+  },
+  "code+prose -> math+chat (unseen domains)": {
+    "S_contig": 1.50802972255609,
+    "S_oracle": 1.0553103715945513,
+    "S_heldout": 1.2450764973958333,
+    "recovered": 0.5175941750755042
+  },
+  "code -> math": {
+    "S_contig": 1.580525716145833,
+    "S_oracle": 1.0427387987446581,
+    "S_heldout": 1.4209812783787397,
+    "recovered": 0.27482751121918336
+  },
+  "chat -> code": {
+    "S_contig": 1.5783956413595084,
+    "S_oracle": 1.0335056924412394,
+    "S_heldout": 1.4175889756944444,
+    "recovered": 0.2780219181581155
+  },
+  "math -> math (same domain, 1st half->2nd)": {
+    "S_contig": 1.5794492020566242,
+    "S_oracle": 1.0419512887286324,
+    "S_heldout": 1.0492020566239317,
+    "recovered": 0.9150882312905081
+  }
+}
