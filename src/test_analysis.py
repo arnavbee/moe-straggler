@@ -113,6 +113,30 @@ def test_skewed_marginals():
     print("PASS S_shuf converges to the marginal+placement floor N*max_j P_j")
 
 
+def test_bad_expert_id_raises():
+    """
+    A stray id >= n_experts used to be absorbed silently: the offset-bincount
+    trick in expert_counts binned it into the NEXT micro-batch, so the counts
+    no longer summed to B*K and S was computed off corrupted loads.  Both the
+    too-large and the negative case must raise instead.
+    """
+    x = synth_iid(1024).astype(np.int64)
+    x[0, 0] = E + 3                       # stray id in the FIRST micro-batch
+    for bad in (E + 3, -1):
+        x[0, 0] = bad
+        try:
+            A.expert_counts(x, 512, n_experts=E)
+        except ValueError as e:
+            assert "out of range" in str(e)
+        else:
+            raise AssertionError("expert_counts accepted id %d" % bad)
+    # and the same id is still fine when n_experts is actually that large
+    x[0, 0] = E + 3
+    c = A.expert_counts(x, 512, n_experts=E + 8)
+    assert (c.sum(axis=1) == 512 * K).all()
+    print("PASS out-of-range expert ids raise instead of bleeding across micro-batches")
+
+
 def test_shuffle_preserves_marginals_exactly():
     x = synth_iid(10000)
     a = np.bincount(x.ravel().astype(np.int64), minlength=E)
@@ -125,6 +149,7 @@ def test_shuffle_preserves_marginals_exactly():
 if __name__ == "__main__":
     test_counts_conserve()
     test_straggler_bounds()
+    test_bad_expert_id_raises()
     test_shuffle_preserves_marginals_exactly()
     test_shuffle_matches_iid()
     test_shuffle_kills_correlation()

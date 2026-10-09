@@ -34,6 +34,17 @@ def expert_counts(topk_layer, B, order=None, n_experts=32):
     if n_micro == 0:
         return np.zeros((0, n_experts), dtype=np.int64)
     v = topk_layer[: n_micro * B].reshape(n_micro, B * K).astype(np.int64)
+    # An id outside [0, n_experts) does NOT raise here on its own: the offset
+    # trick below would quietly bin it as some other expert in a LATER
+    # micro-batch, so the counts stop summing to B*K and every S / M / H / G
+    # downstream is wrong with no warning.  Check it instead.
+    if v.size:
+        lo, hi = int(v.min()), int(v.max())
+        if lo < 0 or hi >= n_experts:
+            raise ValueError(
+                "expert id out of range: trace holds ids [%d, %d] but "
+                "n_experts=%d (pass the model's real expert count)"
+                % (lo, hi, n_experts))
     # bincount per row without a python loop
     offs = (np.arange(n_micro, dtype=np.int64) * n_experts)[:, None]
     flat = np.bincount((v + offs).ravel(), minlength=n_micro * n_experts)
