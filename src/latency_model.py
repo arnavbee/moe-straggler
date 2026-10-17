@@ -42,6 +42,10 @@ def main():
         rows = [r for r in csv.DictReader(f)
                 if int(r["B"]) == B and int(r["N"]) == N
                 and r["domain"] in ("code", "prose", "math", "chat")]
+    if not rows:
+        sys.exit("out/sweep.csv has no within-domain rows at B=%d, N=%d. "
+                 "Run src/sweep.py first; averaging an empty set would print nan "
+                 "milliseconds that look like real numbers." % (B, N))
     S_obs = float(np.mean([float(r["S_obs_mean"]) for r in rows]))
     S_p95 = float(np.mean([float(r["S_obs_p95"]) for r in rows]))
     S_shuf = float(np.mean([float(r["S_shuf_mean"]) for r in rows]))

@@ -93,6 +93,7 @@ python3 -m pip install --user "transformers==4.57.6" matplotlib pyarrow
 python3 src/download.py       # 2.67 GB into the HF cache
 python3 src/probe.py          # asserts the routing API actually works. Do this first.
 python3 src/test_analysis.py  # validates the estimator on synthetic data. Also first.
+python3 src/test_latency_model.py  # pins the derived payload arithmetic. No data needed.
 python3 src/build_corpus.py   # -> data/tokens_<domain>.npy
 python3 src/collect.py        # the one model run  -> data/trace_<domain>.npz
 python3 src/sweep.py          # -> out/sweep.csv
@@ -114,6 +115,7 @@ python3 src/latency_model.py  # -> out/latency_model.txt
 | `src/sweep.py` | domain × layer × B × N → `out/sweep.csv`. |
 | `src/figures.py` | Figures 1–4. |
 | `src/latency_model.py` | Converts a measured `S` into implied bytes and milliseconds. Derived, not measured. |
+| `src/test_latency_model.py` | Arithmetic tests for the derived model: dispatch+combine both counted, linear in `B`, `1/N` per device, and a missing sweep exits instead of printing `nan` milliseconds. Needs no traces. |
 
 ---
 
